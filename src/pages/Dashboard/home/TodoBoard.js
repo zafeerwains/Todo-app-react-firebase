@@ -169,7 +169,6 @@ export default function TodoBoard() {
                                 </div>
                                 <Menu
                                     style={{ background: "transparent" }}
-                                    defaultSelectedKeys={['1']}
                                     mode="vertical"
                                 >
                                     <Menu.Item key="1" icon={<DoubleRightOutlined />} onClick={() => {
