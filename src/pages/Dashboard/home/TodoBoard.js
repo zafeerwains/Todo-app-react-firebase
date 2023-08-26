@@ -84,7 +84,7 @@ export default function TodoBoard() {
             0.587 * (g * g) +
             0.114 * (b * b)
         );
-        if (hsp > 127.5) {
+        if (hsp > 160) {
             return 'light';
         }
         else {
@@ -140,112 +140,107 @@ export default function TodoBoard() {
                         <Layout style={{
                             background: 'transparent'
                         }} >
-                            <Sider trigger={null} collapsible collapsed={collapsed}
+                            <Sider
+                                trigger={null}
+                                collapsible
+                                collapsed={collapsed}
                                 width={250}
                                 style={{
-                                    overflow: 'auto', height: `95vh`, position: 'fixed', left: 17, top: 18, bottom: 0, borderRadius: '15px', backgroundColor: "#F4F4F4",
-                                }}>
+                                    overflow: 'auto',
+                                    height: '95vh',
+                                    position: 'fixed',
+                                    left: 17,
+                                    top: 18,
+                                    bottom: 0,
+                                    borderRadius: '15px',
+                                    backgroundColor: "#F4F4F4",
+                                }}
+                            >
                                 <div className="demo-logo-vertical" />
                                 <div className="d-flex">
                                     {collapsed ? "" : <h4 className='fw-bold pt-3 px-3 mt-1'>Menu</h4>}
-                                    <Button type="text" icon={collapsed ? <MenuUnfoldOutlined style={{ color: "black", }} /> : <MenuFoldOutlined style={{ color: "black", }} />} onClick={() => setCollapsed(!collapsed)} className=' px-0 w-100 mx-0 text-light' style={{ height: 70, color: "black" }} />
+                                    <Button
+                                        type="text"
+                                        icon={collapsed ? <MenuUnfoldOutlined style={{ color: "black" }} /> : <MenuFoldOutlined style={{ color: "black" }} />}
+                                        onClick={() => setCollapsed(!collapsed)}
+                                        className='px-0 w-100 mx-0 text-light'
+                                        style={{ height: 70, color: "black" }}
+                                    />
                                 </div>
                                 <Menu
                                     style={{ background: "transparent" }}
-                                    items={[
-                                        {
-                                            key: '1',
-                                            icon: <DoubleRightOutlined />,
-                                            label: 'Upcomming',
-                                            onClick: () => {
-                                                let Today = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`;
-                                                try {
-                                                    const filteredTodos = allTodo.filter(todo => new Date(todo.date) > new Date(Today));
-                                                    setShowTodo(filteredTodos);
-                                                } catch (error) {
-                                                    console.error(error);
-                                                }
-                                            }
-                                        },
-                                        {
-                                            key: '2',
-                                            icon: <UnorderedListOutlined />,
-                                            label: 'Today',
-                                            onClick: () => {
-                                                let Today = `${new Date().getFullYear()}-${(new Date().getMonth() + 1) < 10 ? 0 : ""}${new Date().getMonth() + 1}-${new Date().getDate()}`;
-                                                try {
-                                                    let filteredTodos = allTodo.filter(todo => todo.date === Today);
-                                                    setShowTodo(filteredTodos);
-                                                } catch (error) {
-                                                    console.error(error);
-                                                }
-                                            }
-                                        },
-                                        {
-                                            key: '3',
-                                            icon: <CalendarOutlined />,
-                                            label: 'Calender',
-                                            onClick: () => {
-                                                setShowDatePicker(showDatePicker ? false : true)
-                                            }
-                                        },
-                                    ]}
-                                />
-                                {showDatePicker && (
-                                    <DatePicker className='mx-3'
-                                        onChange={(_, dateString) => {
-                                            try {
-                                                let filteredTodos = allTodo.filter(todo => todo.date === dateString);
-                                                setShowTodo(filteredTodos);
-                                            } catch (error) {
-                                                console.error(error);
-                                            }
-                                            setShowDatePicker(false);
-                                        }}
-                                    />
-                                )}
-                                <Menu
-                                    style={{ background: "transparent" }}
-                                    items={[
-                                        {
-                                            key: '4',
-                                            icon: <WalletOutlined />,
-                                            label: 'Sticky Wall',
-                                            onClick: () => {
-                                                setShowTodo(allTodo)
-                                            }
+                                    defaultSelectedKeys={['1']}
+                                    mode="vertical"
+                                >
+                                    <Menu.Item key="1" icon={<DoubleRightOutlined />} onClick={() => {
+                                        let Today = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`;
+                                        try {
+                                            const filteredTodos = allTodo.filter(todo => new Date(todo.date) > new Date(Today));
+                                            setShowTodo(filteredTodos);
+                                        } catch (error) {
+                                            console.error(error);
                                         }
-                                    ]} />
-                                <Divider />
-                                <h5 className="px-2 mt-1">Lists</h5>
-                                <Menu
-                                    style={{ background: "transparent" }}
-                                    items={[
-                                        ...listArray.map((allLists, i) => {
-                                            return (
-                                                {
-                                                    key: i,
-                                                    icon: <CheckSquareFilled style={{ color: allLists.iconColor }} />,
-                                                    label: allLists.label,
-                                                    onClick: () => {
-                                                        try {
-                                                            let filteredTodos = allTodo.filter(todo => todo.list === allLists.label);
-                                                            setShowTodo(filteredTodos);
-                                                        } catch (error) {
-                                                            console.error(error);
-                                                        }
+                                    }}>
+                                        Upcoming
+                                    </Menu.Item>
+                                    <Menu.Item key="2" icon={<UnorderedListOutlined />} onClick={() => {
+                                        let Today = `${new Date().getFullYear()}-${(new Date().getMonth() + 1) < 10 ? 0 : ""}${new Date().getMonth() + 1}-${new Date().getDate()}`;
+                                        try {
+                                            let filteredTodos = allTodo.filter(todo => todo.date === Today);
+                                            setShowTodo(filteredTodos);
+                                        } catch (error) {
+                                            console.error(error);
+                                        }
+                                    }}>
+                                        Today
+                                    </Menu.Item>
+                                    <Menu.Item key="3" icon={<CalendarOutlined />} onClick={() => setShowDatePicker(!showDatePicker)}>
+                                        Calendar
+                                    </Menu.Item>
+                                    {showDatePicker && (
+                                        <Menu.Item>
+                                            <DatePicker
+                                                className='mx-3'
+                                                onChange={(_, dateString) => {
+                                                    try {
+                                                        let filteredTodos = allTodo.filter(todo => todo.date === dateString);
+                                                        setShowTodo(filteredTodos);
+                                                    } catch (error) {
+                                                        console.error(error);
                                                     }
+                                                    setShowDatePicker(false);
+                                                }}
+                                            />
+                                        </Menu.Item>
+                                    )}
+                                    <Divider />
+                                    <Menu.Item key="4" icon={<WalletOutlined />} onClick={() => {
+                                        setShowTodo(allTodo)
+                                    }}>
+                                        Sticky Wall
+                                    </Menu.Item>
+                                    <Divider />
+                                    <h5 className="px-2 mt-1">Lists</h5>
+                                    {listArray.map((allLists, i) => (
+                                        <Menu.Item
+                                            key={i}
+                                            icon={<CheckSquareFilled style={{ color: allLists.iconColor }} />}
+                                            onClick={() => {
+                                                try {
+                                                    let filteredTodos = allTodo.filter(todo => todo.list === allLists.label);
+                                                    setShowTodo(filteredTodos);
+                                                } catch (error) {
+                                                    console.error(error);
                                                 }
-                                            )
-                                        })
-                                    ]}
-                                />
-                                {
-                                    listInput && (
-                                        <Form>
-                                            <Form.Item >
-                                                <Input placeholder="Label here" onChange={(e) => { newList = { label: e.target.value, createdBy: user.uid } }} />
-                                            </Form.Item>
+                                            }}
+                                        >
+                                            {allLists.label}
+                                        </Menu.Item>
+                                    ))}
+                                    {listInput && (
+                                        <Form> <Form.Item >
+                                            <Input placeholder="Label here" onChange={(e) => { newList = { label: e.target.value, createdBy: user.uid } }} />
+                                        </Form.Item>
                                             <Form.Item >
                                                 <Input placeholder="Logo Color" onChange={(e) => { newList = { ...newList, iconColor: e.target.value } }} />
                                             </Form.Item>
@@ -265,32 +260,16 @@ export default function TodoBoard() {
                                                 }>add</Button>
                                             </Form.Item>
                                         </Form>
-                                    )
-                                }
-                                <Menu
-                                    style={{ background: "transparent" }}
-                                    items={
-                                        [
-                                            {
-                                                key: '15',
-                                                icon: <PlusOutlined />,
-                                                label: 'Add New List',
-                                                onClick: () => {
-                                                    setListInput(listInput ? false : true)
-                                                }
-                                            },
-                                            {
-                                                key: '14',
-                                                icon: <LogoutOutlined />,
-                                                label: 'Log OUt',
-                                                onClick: () => {
-                                                    handleLogout()
-                                                }
-                                            }
-                                        ]
-                                    }
-                                />
+                                    )}
+                                    <Menu.Item key="15" icon={<PlusOutlined />} onClick={() => setListInput(!listInput)}>
+                                        Add New List
+                                    </Menu.Item>
+                                    <Menu.Item key="14" icon={<LogoutOutlined />} onClick={handleLogout}>
+                                        Log Out
+                                    </Menu.Item>
+                                </Menu>
                             </Sider>
+
                             <Layout
                                 className="site-layout"
                                 style={{
