@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined, DoubleRightOutlined, LogoutOutlined, CheckSquareFilled, CalendarOutlined, UnorderedListOutlined, DeleteOutlined, MoreOutlined, EditOutlined, WalletOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Col, ColorPicker, DatePicker, Divider, Dropdown, Form, Input, Layout, Menu, Modal, Row, Select, message } from 'antd';
 import Title from 'antd/es/typography/Title';
-import { collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, where } from 'firebase/firestore'
+import { collection, doc,  getDocs, query, serverTimestamp, setDoc, where } from 'firebase/firestore'
 import { useAuthContext } from '../../../contexts/AuthContext';
 import { auth, firestore } from '../../../config/firebase';
 import { signOut } from 'firebase/auth';
@@ -222,7 +222,7 @@ export default function TodoBoard() {
                                     <h5 className="px-2 mt-1">Lists</h5>
                                     {listArray.map((allLists, i) => (
                                         <Menu.Item
-                                            key={i}
+                                            key={i+5}
                                             icon={<CheckSquareFilled style={{ color: allLists.iconColor }} />}
                                             onClick={() => {
                                                 try {
@@ -285,7 +285,7 @@ export default function TodoBoard() {
                                                     overflow: 'initial',
                                                     // width:"100%",
                                                     background: 'transparent',
-                                                    overflow: 'auto',
+                                                    // overflow: 'auto',
                                                     height: `97vh`,
                                                     position: 'relative',
                                                     left: 3,
